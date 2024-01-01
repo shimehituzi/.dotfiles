@@ -1,0 +1,40 @@
+[battery]
+disabled = true
+
+[git_metrics]
+added_style = 'bold blue'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+
+[os]
+format = "on [$symbol]($style) "
+style = "bold white"
+disabled = false
+
+[os.symbols]
+Macos = " "
+
+[git_branch]
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[shell]
+fish_indicator = '󰈺 '
+style = 'cyan bold'
+disabled = false
+
+[directory]
+read_only = " 󰌾"
+truncation_length = 6
+truncation_symbol = '…/'
+
+[nodejs]
+symbol = " "
+
+[sudo]
+disabled = false
+symbol = 'sudo '
+
+[time]
+disabled = false

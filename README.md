@@ -8,10 +8,6 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/shimehituzi/.dotfiles/master/install.sh)"
 ```
 
-## requirement
-
-fonts: [UDEV Gothic](https://github.com/yuru7/udev-gothic)
-
 ## manual setteings
 
 ### iTerm Load Setting file
@@ -19,6 +15,14 @@ fonts: [UDEV Gothic](https://github.com/yuru7/udev-gothic)
 iTerm -> Preferences -> Preferences
 
 Load preferences from a custom folder or URL: `/Users/[username]/.config/iterm2`
+
+### install runtimes and nvim plugins
+
+```bash
+rtx i
+nvim
+
+```
 
 ## Note: Update Submodule
 

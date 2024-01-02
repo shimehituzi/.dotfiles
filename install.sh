@@ -51,7 +51,7 @@ install_font() {
     cd $tmp_fonts_path
     curl -LO $fonts_release_url
     unzip $(basename $fonts_release_url)
-    mv $(basename $fonts_release_url | sed 's/.zip$//') $fonts_dir_path
+    mv $(basename $fonts_release_url | sed 's/.zip$//')/*.ttf $fonts_dir_path
     cd $dotfiles_path
     rm -rf $tmp_fonts_path
     fc-cache -fv

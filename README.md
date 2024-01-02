@@ -8,12 +8,11 @@
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/shimehituzi/.dotfiles/master/install.sh)"
 ```
 
-## manual setteings
+## Manual setteings
 
 ### iTerm Load Setting file
 
 iTerm -> Preferences -> Preferences
-
 Load preferences from a custom folder or URL: `/Users/[username]/.config/iterm2`
 
 ### install runtimes and nvim plugins

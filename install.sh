@@ -4,7 +4,7 @@ dotfiles_path="$HOME/.dotfiles"
 fonts_dir_path="$HOME/Library/Fonts"
 tmp_fonts_path="$dotfiles_path/.tmp_fonts"
 
-my_dotfils_url="git@github.com:shimehituzi/.dotfiles.git"
+my_dotfils_url="https://github.com/shimehituzi/.dotfiles.git"
 homebrew_install_sh_url="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 fonts_release_url="https://github.com/yuru7/udev-gothic/releases/download/v1.3.1/UDEVGothic_NF_v1.3.1.zip"
 

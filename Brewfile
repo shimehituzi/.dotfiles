@@ -1,6 +1,7 @@
 tap "homebrew/bundle"
 brew "fd"
 brew "fish"
+brew "fontconfig"
 brew "gh"
 brew "git"
 brew "lazygit"

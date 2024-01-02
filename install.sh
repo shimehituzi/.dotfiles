@@ -2,27 +2,27 @@
 
 dotfiles_path="$HOME/.dotfiles"
 
-install_dotfiles() {
+function install_dotfiles() {
   [[ -e ~/.dotfiles ]] || git clone git@github.com:shimehituzi/.dotfiles.git ~/.dotfiles
 }
 
-install_gitsubmodule() {
+function install_gitsubmodule() {
   git submodule init
   git submodule update
 }
 
-install_pkg_manager() {
+function install_pkg_manager() {
   which -s brew
   if [[ $? != 0 ]] ; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 }
 
-install_packages() {
+function install_packages() {
   brew bundle --no-lock
 }
 
-generate_symlink() {
+function generate_symlink() {
   for file in `ls -a ${dotfiles_path}`; do
     [ $file = '.' ] && continue
     [ $file = '..' ] && continue
@@ -35,23 +35,14 @@ generate_symlink() {
   done
 }
 
-
-main() {
-
-  install_dotfiles()
-
+function main() {
+  install_dotfiles
   pushd ${dotfiles_path}
-
-  install_gitsubmodule()
-
-  generate_symlink()
-
+  install_gitsubmodule
+  generate_symlink
   pushd $HOME
-
-  install_pkg_manager()
-
-  install_packages()
-
+  install_pkg_manager
+  install_packages
 }
 
 main "$@"

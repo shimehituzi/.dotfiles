@@ -18,7 +18,7 @@ Load preferences from a custom folder or URL: `/Users/[username]/.config/iterm2`
 ### install runtimes and nvim plugins
 
 ```bash
-rtx i
+mise i
 nvim
 
 ```

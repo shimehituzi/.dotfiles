@@ -22,4 +22,4 @@ end
 starship init fish | source
 enable_transience
 
-rtx activate fish | source
+mise activate fish | source

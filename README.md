@@ -2,7 +2,7 @@
 
 **dotfiles for me**
 
-## Install Command
+## Install
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/shimehituzi/.dotfiles/master/install.sh)"
@@ -10,20 +10,10 @@
 
 ## Manual setteings
 
-### iTerm Load Setting file
-
 iTerm -> Preferences -> Preferences
 Load preferences from a custom folder or URL: `/Users/[username]/.config/iterm2`
 
-### install runtimes and nvim plugins
-
-```bash
-mise i
-nvim
-
-```
-
-## Note: Update Submodule
+## **Note**: Update Submodule
 
 in `~/.dotfiles`
 

@@ -12,7 +12,7 @@ require_fonts_name="UDEVGothicNFLG-Regular.ttf"
 
 
 install_dotfiles() {
-  [[ -e ~/.dotfiles ]] || git clone $my_dotfils_url $dotfiles_path
+  [[ -e $dotfiles_path ]] || git clone $my_dotfils_url $dotfiles_path
 }
 
 install_gitsubmodule() {
@@ -41,10 +41,20 @@ install_pkg_manager() {
 }
 
 install_packages() {
+  which -s brew
+  if [[ $? != 0 ]] ; then
+    echo "brew is not installed" >&2
+    exit 1
+  fi
   brew bundle --no-lock
 }
 
 install_font() {
+  which -s fc-cache
+  if [[ $? != 0 ]] ; then
+    echo "fc-cache is not installed" >&2
+    exit 1
+  fi
   if [[ ! -e "$fonts_dir_path/$require_fonts_name" ]]; then
     mkdir -p $fonts_dir_path
     mkdir -p $tmp_fonts_path
@@ -58,6 +68,15 @@ install_font() {
   fi
 }
 
+install_runtimes() {
+  which -s mise
+  if [[ $? != 0 ]] ; then
+    echo "mise not is installed" >&2
+    exit 1
+  fi
+  mise i
+} 
+
 main() {
   install_dotfiles
   cd $dotfiles_path
@@ -67,6 +86,7 @@ main() {
   install_pkg_manager
   install_packages
   install_font
+  install_runtimes
 }
 
 main "$@"

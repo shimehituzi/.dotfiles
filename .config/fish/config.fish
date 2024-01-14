@@ -23,3 +23,5 @@ starship init fish | source
 enable_transience
 
 mise activate fish | source
+
+source ~/.config/fish/abbr.fish

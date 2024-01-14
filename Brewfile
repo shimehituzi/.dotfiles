@@ -10,6 +10,7 @@ brew "mise"
 brew "neovim", args: ["HEAD"]
 brew "ripgrep"
 brew "starship"
+brew "translate-shell"
 brew "zellij"
 cask "iterm2"
 cask "karabiner-elements"

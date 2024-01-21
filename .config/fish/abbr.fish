@@ -10,6 +10,7 @@ abbr --add cd z
 abbr --add enja trans -b -s en -t ja
 abbr --add jaen trans -b -s ja -t en
 abbr --add dv nvim -c "DiffviewOpen"
+abbr --add nvim echo "use abbr"
 
 # git
 abbr --add gs git status

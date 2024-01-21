@@ -3,6 +3,7 @@ abbr --add ls eza
 abbr --add ll eza -l
 abbr --add la eza -la
 abbr --add tree eza --tree
+abbr --add trel eza --tree --level
 abbr --add grep rg
 abbr --add find fd
 abbr --add cd z

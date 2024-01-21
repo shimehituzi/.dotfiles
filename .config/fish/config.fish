@@ -25,3 +25,5 @@ enable_transience
 mise activate fish | source
 
 source ~/.config/fish/abbr.fish
+
+zoxide init fish | source

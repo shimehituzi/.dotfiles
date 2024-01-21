@@ -6,3 +6,4 @@ abbr --add grep rg
 abbr --add find fd
 abbr --add cd z
 abbr --add n nvim
+abbr --add dv nvim -c "DiffviewOpen"

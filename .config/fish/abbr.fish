@@ -16,6 +16,7 @@ abbr --add gs git status
 abbr --add ga git add
 abbr --add gc git commit
 abbr --add gca git commit --amend
+abbr --add gcm git commit -m
 abbr --add gp git push
 abbr --add gpl git pull
 abbr --add gch git checkout

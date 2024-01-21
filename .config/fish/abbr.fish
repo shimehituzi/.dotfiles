@@ -1,9 +1,23 @@
-abbr --add enja trans -b -s en -t ja
-abbr --add jaen trans -b -s ja -t en
-abbr --add gs git status
+abbr --add n nvim
 abbr --add ls eza
+abbr --add ll eza -l
+abbr --add la eza -la
+abbr --add tree eza --tree
 abbr --add grep rg
 abbr --add find fd
 abbr --add cd z
-abbr --add n nvim
+abbr --add enja trans -b -s en -t ja
+abbr --add jaen trans -b -s ja -t en
 abbr --add dv nvim -c "DiffviewOpen"
+
+# git
+abbr --add gs git status
+abbr --add ga git add
+abbr --add gc git commit
+abbr --add gca git commit --amend
+abbr --add gp git push
+abbr --add gpl git pull
+abbr --add gch git checkout
+abbr --add gr git reset
+abbr --add gbr git branch
+abbr --add gcl git clean

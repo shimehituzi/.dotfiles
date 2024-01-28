@@ -271,7 +271,7 @@ session_serialization false
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-theme "nord"
+theme "catppuccin-frappe"
 
 // The name of the default layout to load on startup
 // Default: "default"
@@ -349,3 +349,10 @@ copy_command "pbcopy"                     // osx
 // Default: true
 //
 // styled_underlines false
+
+ui {
+  pane_frames {
+    hide_session_name true
+    rounded_corners true
+  }
+}

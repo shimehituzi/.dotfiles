@@ -12,6 +12,10 @@ abbr --add dv nvim -c "DiffviewOpen"
 abbr --add e $EDITOR
 abbr --add rt trash -F
 abbr --add de delta
+abbr --add bb brew bundle --no-lock
+abbr --add bbd brew bundle dump --force
+abbr --add bbc brew bundle clean --force
+abbr --add bbcl brew bundle clean --force
 
 # git
 abbr --add gs git status

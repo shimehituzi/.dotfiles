@@ -10,6 +10,7 @@ abbr --add enja trans -b -s en -t ja
 abbr --add jaen trans -b -s ja -t en
 abbr --add dv nvim -c "DiffviewOpen"
 abbr --add e $EDITOR
+abbr --add rt trash -F
 
 # git
 abbr --add gs git status
@@ -23,3 +24,4 @@ abbr --add gch git checkout
 abbr --add gr git reset
 abbr --add gbr git branch
 abbr --add gcl git clean
+abbr --add gsm git submodule update --remote

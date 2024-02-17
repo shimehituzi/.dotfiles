@@ -11,6 +11,7 @@ abbr --add jaen trans -b -s ja -t en
 abbr --add dv nvim -c "DiffviewOpen"
 abbr --add e $EDITOR
 abbr --add rt trash -F
+abbr --add de delta
 
 # git
 abbr --add gs git status
@@ -25,3 +26,4 @@ abbr --add gr git reset
 abbr --add gbr git branch
 abbr --add gcl git clean
 abbr --add gsm git submodule update --remote
+abbr --add gd git diff

@@ -6,8 +6,8 @@ abbr --add trel eza --tree --level
 abbr --add grep rg
 abbr --add find fd
 abbr --add cd z
-abbr --add enja trans -b -s en -t ja
-abbr --add jaen trans -b -s ja -t en
+abbr --add ja trans -b -s en -t ja
+abbr --add en trans -b -s ja -t en
 abbr --add dv nvim -c "DiffviewOpen"
 abbr --add e $EDITOR
 abbr --add rt trash -F

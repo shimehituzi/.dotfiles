@@ -5,6 +5,7 @@ brew "fish"
 brew "fontconfig"
 brew "gh"
 brew "git"
+brew "git-delta"
 brew "mise"
 brew "neovim", args: ["HEAD"]
 brew "ripgrep"

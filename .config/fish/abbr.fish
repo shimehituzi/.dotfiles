@@ -16,7 +16,7 @@ abbr --add bb brew bundle --no-lock
 abbr --add bbd brew bundle dump --force
 abbr --add bbc brew bundle clean --force
 abbr --add bbcl brew bundle clean --force
-abbr --add gkg gk graph
+abbr --add gkg "gk graph &"
 abbr --add abl cat ~/.dotfiles/.config/fish/abbr.fish
 
 # git

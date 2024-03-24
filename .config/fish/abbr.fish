@@ -8,16 +8,15 @@ abbr --add find fd
 abbr --add cd z
 abbr --add ja trans -b -s en -t ja
 abbr --add en trans -b -s ja -t en
-abbr --add dv nvim -c "DiffviewOpen"
 abbr --add e $EDITOR
 abbr --add rt trash -F
 abbr --add de delta
 abbr --add bb brew bundle --no-lock
 abbr --add bbd brew bundle dump --force
 abbr --add bbc brew bundle clean --force
-abbr --add bbcl brew bundle clean --force
 abbr --add gkg "gk graph &"
-abbr --add abl cat ~/.dotfiles/.config/fish/abbr.fish
+abbr --add abl abbr --show
+abbr --add md "ls *.md | entr -c glow"
 
 # git
 abbr --add gs git status

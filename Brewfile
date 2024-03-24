@@ -1,4 +1,5 @@
 tap "homebrew/bundle"
+brew "entr"
 brew "eza"
 brew "fd"
 brew "fish"
@@ -6,6 +7,7 @@ brew "fontconfig"
 brew "gh"
 brew "git"
 brew "git-delta"
+brew "glow"
 brew "mise"
 brew "neovim", args: ["HEAD"]
 brew "ripgrep"

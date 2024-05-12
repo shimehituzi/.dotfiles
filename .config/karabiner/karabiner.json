@@ -205,8 +205,8 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "mouse_flip_horizontal_wheel": false,
-                    "mouse_flip_vertical_wheel": false,
+                    "mouse_flip_horizontal_wheel": true,
+                    "mouse_flip_vertical_wheel": true,
                     "mouse_flip_x": false,
                     "mouse_flip_y": false,
                     "mouse_swap_wheels": false,
@@ -372,6 +372,26 @@
                             "to": [
                                 {
                                     "key_code": "escape"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "caps_lock"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "left_control"
+                                }
+                            ]
+                        },
+                        {
+                            "from": {
+                                "key_code": "left_control"
+                            },
+                            "to": [
+                                {
+                                    "key_code": "caps_lock"
                                 }
                             ]
                         }

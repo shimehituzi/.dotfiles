@@ -8,6 +8,7 @@ brew "gh"
 brew "git"
 brew "git-delta"
 brew "glow"
+brew "go"
 brew "mise"
 brew "neovim", args: ["HEAD"]
 brew "ripgrep"

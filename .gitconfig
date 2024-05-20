@@ -14,7 +14,7 @@
 [diff]
   colorMoved = default
 
-[delta "catppuccin-frappe"]
+[delta "Catppuccin-frappe"]
   blame-palette = "#303446 #292c3c #232634 #414559 #51576d"
   commit-decoration-style = "box ul"
   dark = true

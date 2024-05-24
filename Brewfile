@@ -1,4 +1,5 @@
 tap "homebrew/bundle"
+brew "delve"
 brew "entr"
 brew "eza"
 brew "fd"

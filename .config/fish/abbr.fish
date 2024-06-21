@@ -13,7 +13,7 @@ abbr --add rt trash -F
 abbr --add de delta
 abbr --add bb brew bundle --no-lock
 abbr --add bbd brew bundle dump --force
-abbr --add bbc brew bundle clean --force
+abbr --add bbc brew bundle cleanup --force
 abbr --add gkg "gk graph &"
 abbr --add abl abbr --show
 abbr --add md "ls *.md | entr -c glow"

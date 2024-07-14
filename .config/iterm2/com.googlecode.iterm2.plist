@@ -1079,7 +1079,7 @@
 			<key>Thin Strokes</key>
 			<integer>3</integer>
 			<key>Transparency</key>
-			<real>0.098824800531914878</real>
+			<real>0.19882480053191492</real>
 			<key>Unicode Normalization</key>
 			<integer>0</integer>
 			<key>Unicode Version</key>
@@ -1155,5 +1155,7 @@
 	<false/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 </dict>
 </plist>

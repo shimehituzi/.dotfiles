@@ -11,6 +11,7 @@ brew "ghcup"
 brew "git"
 brew "git-delta"
 brew "glow"
+brew "helix"
 brew "mise"
 brew "neovim", args: ["HEAD"]
 brew "ripgrep"

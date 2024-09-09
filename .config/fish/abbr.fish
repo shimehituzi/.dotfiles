@@ -33,3 +33,7 @@ abbr --add gbr git branch
 abbr --add gcl git clean
 abbr --add gsm git submodule update --remote
 abbr --add gd git diff
+
+# lang
+abbr --add dts deno task start
+abbr --add dtt deno task test

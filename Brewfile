@@ -14,6 +14,7 @@ brew "git-delta"
 brew "glow"
 brew "helix"
 brew "mise"
+brew "utf8proc", args: ["HEAD"]
 brew "neovim", args: ["HEAD"]
 brew "ripgrep"
 brew "starship"

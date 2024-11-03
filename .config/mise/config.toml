@@ -1,9 +1,8 @@
 [tools]
-node = "20"
-python = "3.12.0"
-bun = "1.0.14"
+node = "latest"
+python = "latest"
+bun = "latest"
 rust = "latest"
 go = "latest"
 poetry = "latest"
 deno = "latest"
-yarn = "latest"

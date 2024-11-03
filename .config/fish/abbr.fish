@@ -18,6 +18,7 @@ abbr --add bbc brew bundle cleanup --force
 abbr --add gkg "gk graph &"
 abbr --add abl abbr --show
 abbr --add md "ls *.md | entr -c glow"
+abbr --add rmds "rm .DS_Store"
 
 # git
 abbr --add gs git status

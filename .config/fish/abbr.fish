@@ -10,7 +10,7 @@ abbr --add cat bat
 abbr --add ja trans -b -s en -t ja
 abbr --add en trans -b -s ja -t en
 abbr --add e $EDITOR
-abbr --add rt trash -F
+abbr --add rt trash
 abbr --add de delta
 abbr --add bb brew bundle --no-lock
 abbr --add bbd brew bundle dump --force

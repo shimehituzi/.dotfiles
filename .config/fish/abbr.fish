@@ -19,6 +19,8 @@ abbr --add gkg "gk graph &"
 abbr --add abl abbr --show
 abbr --add md "ls *.md | entr -c glow"
 abbr --add rmds "rm .DS_Store"
+abbr --add vi nvim
+abbr --add vim nvim
 
 # git
 abbr --add gs git status

@@ -1,6 +1,5 @@
 [tools]
 node = "latest"
-python = "latest"
 bun = "latest"
 rust = "latest"
 go = "latest"

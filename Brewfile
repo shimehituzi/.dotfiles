@@ -12,11 +12,9 @@ brew "ghcup"
 brew "git"
 brew "git-delta"
 brew "glow"
-brew "helix"
 brew "jq"
 brew "mise"
-brew "utf8proc", args: ["HEAD"]
-brew "neovim", args: ["HEAD"]
+brew "neovim"
 brew "ripgrep"
 brew "starship"
 brew "stylua"

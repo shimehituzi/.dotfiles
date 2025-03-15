@@ -12,7 +12,7 @@ abbr --add en trans -b -s ja -t en
 abbr --add e $EDITOR
 abbr --add rt trash
 abbr --add de delta
-abbr --add bb brew bundle --no-lock
+abbr --add bb brew bundle
 abbr --add bbd brew bundle dump --force
 abbr --add bbc brew bundle cleanup --force
 abbr --add gkg "gk graph &"

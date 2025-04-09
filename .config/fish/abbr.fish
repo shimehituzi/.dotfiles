@@ -15,7 +15,7 @@ abbr --add de delta
 abbr --add bb brew bundle
 abbr --add bbd brew bundle dump --force
 abbr --add bbc brew bundle cleanup --force
-abbr --add gkg "gk graph &"
+abbr --add kr "gk graph --gitkraken"
 abbr --add abl abbr --show
 abbr --add md "ls *.md | entr -c glow"
 abbr --add rmds "rm .DS_Store"

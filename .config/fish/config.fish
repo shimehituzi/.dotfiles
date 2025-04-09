@@ -27,3 +27,5 @@ mise activate fish | source
 source ~/.config/fish/abbr.fish
 
 zoxide init fish | source
+
+gopass completion fish | source

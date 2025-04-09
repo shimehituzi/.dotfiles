@@ -1,0 +1,4 @@
+[mounts]
+	path = /Users/shimehituzi/.local/share/gopass/stores/root
+[recipients]
+	hash = b7c1ff86cbb1fca15a32f86829e0b9f264a07441cb8997bc2525ab397b3ef3d0

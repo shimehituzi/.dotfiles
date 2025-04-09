@@ -75,7 +75,17 @@ install_runtimes() {
     exit 1
   fi
   mise i
-} 
+}
+
+setup_bat_cache() {
+  which -s bat
+  if [[ $? != 0 ]] ; then
+    echo "bat is not installed" >&2
+    return 1
+  fi
+  echo "Building bat cache..."
+  bat cache --build
+}
 
 main() {
   install_dotfiles
@@ -87,6 +97,7 @@ main() {
   install_packages
   install_font
   install_runtimes
+  setup_bat_cache
 }
 
 main "$@"

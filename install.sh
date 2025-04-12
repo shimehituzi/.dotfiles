@@ -87,6 +87,18 @@ setup_bat_cache() {
   bat cache --build
 }
 
+install_gnupg_symlink() {
+  local src="$dotfiles_path/.config/gnupg/gpg-agent.conf"
+  local dest="$HOME/.gnupg/gpg-agent.conf"
+
+  mkdir -p "$(dirname "$dest")"
+  chmod 700 "$(dirname "$dest")"
+
+  ln -sf "$src" "$dest"
+
+  gpgconf --kill gpg-agent
+}
+
 main() {
   install_dotfiles
   cd $dotfiles_path
@@ -98,6 +110,7 @@ main() {
   install_font
   install_runtimes
   setup_bat_cache
+  install_gnupg_symlink 
 }
 
 main "$@"

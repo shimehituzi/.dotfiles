@@ -3,3 +3,5 @@
 .config/karabiner/automatic_backups
 .config/github-copilot
 .config/gopass
+
+.config/mcphub/mcphub.log

@@ -1,25 +1,44 @@
 {
   "mcpServers": {
-    "github.com/modelcontextprotocol/servers/tree/main/src/git": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-git"
-      ]
-    },
-    "github.com/modelcontextprotocol/servers/tree/main/src/time": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-time",
-        "--local-timezone=Asia/Tokyo"
-      ]
-    },
-    "sequential-thinking": {
-      "command": "npx",
+    "github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
-      ]
+      ],
+      "command": "npx"
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/filesystem": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/shimehituzi/Dropbox/",
+        "/Users/shimehituzi/Desktop/"
+      ],
+      "disabled": false,
+      "command": "npx"
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/github": {
+      "args": [
+        "-c",
+        "GITHUB_PERSONAL_ACCESS_TOKEN=$(gopass show -o github/api_key) npx -y @modelcontextprotocol/server-github"
+      ],
+      "command": "/bin/zsh"
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/time": {
+      "args": [
+        "mcp-server-time",
+        "--local-timezone=Asia/Tokyo"
+      ],
+      "command": "uvx"
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/git": {
+      "args": [
+        "mcp-server-git"
+      ],
+      "command": "uvx"
     }
   },
-  "nativeMCPServers": []
+  "nativeMCPServers": [
+    
+  ]
 }

@@ -12,6 +12,13 @@
         "mcp-server-time",
         "--local-timezone=Asia/Tokyo"
       ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ]
     }
   },
   "nativeMCPServers": []

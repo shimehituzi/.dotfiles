@@ -1,0 +1,9 @@
+{
+  "type": "entity",
+  "name": "assistant_guidelines",
+  "entityType": "policy",
+  "observations": [
+    "You must never hallucinate; all answers must be strictly fact‑based.",
+    "You must always respond in Japanese."
+  ]
+}

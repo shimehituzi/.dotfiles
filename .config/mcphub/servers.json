@@ -1,6 +1,18 @@
-{"mcpServers":{
-  "github.com/modelcontextprotocol/servers/tree/main/src/git": {
-    "command": "uvx",
-    "args": ["mcp-server-git"]
-  }
-}}
+{
+  "mcpServers": {
+    "github.com/modelcontextprotocol/servers/tree/main/src/git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git"
+      ]
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/time": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-time",
+        "--local-timezone=Asia/Tokyo"
+      ]
+    }
+  },
+  "nativeMCPServers": []
+}

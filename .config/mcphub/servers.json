@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "github.com/modelcontextprotocol/servers/tree/main/src/filesystem": {
+    "filesystem": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
@@ -10,14 +10,14 @@
       "disabled": false,
       "command": "npx"
     },
-    "github.com/modelcontextprotocol/servers/tree/main/src/git": {
+    "git": {
       "args": [
         "mcp-server-git"
       ],
       "disabled": false,
       "command": "uvx"
     },
-    "github.com/modelcontextprotocol/servers/tree/main/src/time": {
+    "time": {
       "args": [
         "mcp-server-time",
         "--local-timezone=Asia/Tokyo"
@@ -25,7 +25,7 @@
       "disabled": false,
       "command": "uvx"
     },
-    "github.com/modelcontextprotocol/servers/tree/main/src/github": {
+    "github": {
       "args": [
         "-c",
         "GITHUB_PERSONAL_ACCESS_TOKEN=$(gopass show -o github/api_key) npx -y @modelcontextprotocol/server-github"
@@ -33,7 +33,7 @@
       "disabled": false,
       "command": "/bin/zsh"
     },
-    "github.com/abhiz123/todoist": {
+    "todoist": {
       "disabled": false,
       "autoApprove": [],
       "args": [
@@ -42,7 +42,7 @@
       ],
       "command": "/bin/zsh"
     },
-    "github.com/tavily-ai/tavily-mcp": {
+    "tavily": {
       "disabled": false,
       "autoApprove": [],
       "args": [
@@ -51,7 +51,7 @@
       ],
       "command": "/bin/zsh"
     },
-    "github.com/modelcontextprotocol/servers/tree/main/src/sequentialthinking": {
+    "sequentialthinking": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
@@ -59,7 +59,7 @@
       "disabled": false,
       "command": "npx"
     },
-    "github.com/modelcontextprotocol/servers/tree/main/src/memory": {
+    "memory": {
       "command": "npx",
       "args": [
         "-y",

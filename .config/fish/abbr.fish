@@ -21,8 +21,7 @@ abbr --add md "ls *.md | entr -c glow"
 abbr --add rmds "rm .DS_Store"
 abbr --add vi nvim
 abbr --add vim nvim
-alias obsidian='open -a Obsidian.app &; disown; nvim --cmd "cd ~/obsidian"'
-abbr --add ob obsidian
+abbr --add ob 'nvim --cmd "cd ~/obsidian"'
 
 # git
 abbr --add gs git status

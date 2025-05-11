@@ -40,17 +40,6 @@
       "command": "/bin/zsh",
       "disabled": false
     },
-    "todoist": {
-      "args": [
-        "-c",
-        "TODOIST_API_TOKEN=$(gopass show -o todoist/api_key) npx -y @abhiz123/todoist-mcp-server"
-      ],
-      "command": "/bin/zsh",
-      "autoApprove": [
-        
-      ],
-      "disabled": false
-    },
     "sequentialthinking": {
       "args": [
         "-y",

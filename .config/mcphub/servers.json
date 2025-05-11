@@ -1,74 +1,71 @@
 {
+  "nativeMCPServers": {
+    "neovim": {
+      "disabled_tools": [
+        "delete_item",
+        "execute_command",
+        "execute_lua",
+        "find_files",
+        "list_directory",
+        "move_item",
+        "read_file",
+        "replace_in_file",
+        "write_file"
+      ]
+    }
+  },
   "mcpServers": {
-    "filesystem": {
+    "memory": {
       "args": [
         "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/Users/shimehituzi/Dropbox/",
-        "/Users/shimehituzi/Desktop/"
+        "@modelcontextprotocol/server-memory"
       ],
-      "disabled": false,
-      "command": "npx"
+      "command": "npx",
+      "env": {
+        "MEMORY_FILE_PATH": "/Users/shimehituzi/.config/mcphub/memory.json"
+      }
     },
     "git": {
       "args": [
         "mcp-server-git"
       ],
-      "disabled": false,
-      "command": "uvx"
-    },
-    "time": {
-      "args": [
-        "mcp-server-time",
-        "--local-timezone=Asia/Tokyo"
-      ],
-      "disabled": false,
-      "command": "uvx"
+      "command": "uvx",
+      "disabled": false
     },
     "github": {
       "args": [
         "-c",
         "GITHUB_PERSONAL_ACCESS_TOKEN=$(gopass show -o github/api_key) npx -y @modelcontextprotocol/server-github"
       ],
-      "disabled": false,
-      "command": "/bin/zsh"
+      "command": "/bin/zsh",
+      "disabled": false
     },
     "todoist": {
-      "disabled": false,
-      "autoApprove": [],
       "args": [
         "-c",
         "TODOIST_API_TOKEN=$(gopass show -o todoist/api_key) npx -y @abhiz123/todoist-mcp-server"
       ],
-      "command": "/bin/zsh"
-    },
-    "tavily": {
-      "disabled": false,
-      "autoApprove": [],
-      "args": [
-        "-c",
-        "TAVILY_API_KEY=$(gopass show -o tavily/api_key) npx -y tavily-mcp@0.1.4"
+      "command": "/bin/zsh",
+      "autoApprove": [
+        
       ],
-      "command": "/bin/zsh"
+      "disabled": false
     },
     "sequentialthinking": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ],
-      "disabled": false,
-      "command": "npx"
-    },
-    "memory": {
       "command": "npx",
+      "disabled": false
+    },
+    "time": {
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
+        "mcp-server-time",
+        "--local-timezone=Asia/Tokyo"
       ],
-      "env": {
-        "MEMORY_FILE_PATH": "/Users/shimehituzi/.config/mcphub/memory.json"
-      }
+      "command": "uvx",
+      "disabled": false
     }
-  },
-  "nativeMCPServers": []
+  }
 }

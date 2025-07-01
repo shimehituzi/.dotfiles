@@ -1,3 +1,8 @@
+# alias for abbr
+
+alias claude="~/.claude/local/claude"
+
+# abbr
 abbr --add ls eza
 abbr --add ll eza -l
 abbr --add la eza -la
@@ -22,6 +27,7 @@ abbr --add rmds "rm .DS_Store"
 abbr --add vi nvim
 abbr --add vim nvim
 abbr --add ob 'nvim --cmd "cd ~/obsidian"'
+abbr --add cl claude
 
 # git
 abbr --add gs git status

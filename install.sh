@@ -29,6 +29,7 @@ generate_symlink() {
     [ $file = '.gitignore' ] && continue
     [ $file = 'README.md' ] && continue
     [ $file = 'install.sh' ] && continue
+    [ $file = '.claude' ] && mkdir -p ~/.claude && ln -snf $dotfiles_path/.claude/CLAUDE.md ~/.claude/ && continue
     ln -snf $dotfiles_path/$file $HOME
   done
 }

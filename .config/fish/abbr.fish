@@ -22,7 +22,8 @@ abbr --add md "ls *.md | entr -c glow"
 abbr --add rmds "rm .DS_Store"
 abbr --add vi nvim
 abbr --add vim nvim
-abbr --add ob 'nvim --cmd "cd ~/obsidian"'
+abbr --add --position command --set-cursor ob 'codex -C ~/obsidian %'
+abbr --add obe 'nvim --cmd "cd ~/obsidian"'
 
 # git
 abbr --add gs git status

@@ -2,28 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AI Prompt</key>
+	<string>Return a command suitable for copy/pasting into \(shell) on \(uname). Do NOT include commentary NOR Markdown triple-backtick code blocks as your whole response will be copied into my terminal automatically.
+
+It must do this: \(ai.prompt)
+
+I use fish
+I not use bash or zsh</string>
+	<key>AI Timeout</key>
+	<integer>30</integer>
 	<key>AIFeatureFunctionCalling</key>
 	<true/>
 	<key>AIFeatureHostedCodeInterpeter</key>
-	<true/>
+	<false/>
 	<key>AIFeatureHostedFileSearch</key>
-	<true/>
+	<false/>
 	<key>AIFeatureHostedWebSearch</key>
-	<true/>
+	<false/>
 	<key>AIFeatureStreamingResponses</key>
 	<true/>
 	<key>AITermAPI</key>
-	<integer>2</integer>
+	<integer>7</integer>
 	<key>AIVectorStore</key>
 	<integer>0</integer>
+	<key>AIVendor</key>
+	<integer>4</integer>
 	<key>AiMaxTokens</key>
-	<integer>400000</integer>
+	<integer>200000</integer>
 	<key>AiModel</key>
-	<string>gpt-5.1</string>
+	<string>claude-sonnet-4-5</string>
 	<key>AiResponseMaxTokens</key>
-	<integer>128000</integer>
+	<integer>64000</integer>
 	<key>AitermURL</key>
-	<string>https://api.openai.com/v1/responses</string>
+	<string>https://api.anthropic.com/v1/messages</string>
 	<key>AllowClipboardAccess</key>
 	<true/>
 	<key>Custom Color Presets</key>

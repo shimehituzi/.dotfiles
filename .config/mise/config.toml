@@ -1,7 +1,13 @@
+[settings]
+# サプライチェーン対策: リリースから7日未満のバージョンは採用しない
+# (汚染されたリリースは通常数日以内に発見・削除されるため)
+minimum_release_age = "7d"
+
 [tools]
-node = "latest"
-bun = "latest"
-rust = "latest"
-go = "latest"
-deno = "latest"
-uv = "latest"
+# "latest" は使わず明示固定する。更新は `mise up --bump` (UPDATE.md 参照)
+node = "26.5.0"
+bun = "1.3.14"
+rust = "1.97.1"
+go = "1.26.5"
+deno = "2.9.2"
+uv = "0.11.28"

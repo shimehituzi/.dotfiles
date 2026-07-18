@@ -1,0 +1,4 @@
+[install]
+# サプライチェーン対策: リリースから7日(604800秒)未満のバージョンをインストールしない
+# (bun add / bun add -g に適用。bunx には効かない既知バグあり → npx 側を使うこと)
+minimumReleaseAge = 604800

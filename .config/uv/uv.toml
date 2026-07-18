@@ -1,0 +1,4 @@
+# サプライチェーン対策: 公開から7日未満のアーティファクトを解決から除外する
+# (uvx / uv tool install / uv add など全 uv コマンドに適用。uv 0.9.17+)
+# 一時的に無効化するとき: UV_EXCLUDE_NEWER=false uvx ...
+exclude-newer = "P7D"

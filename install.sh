@@ -29,6 +29,9 @@ generate_symlink() {
     [ $file = '.gitignore' ] && continue
     [ $file = 'README.md' ] && continue
     [ $file = 'install.sh' ] && continue
+    [ $file = 'UPDATE.md' ] && continue
+    [ $file = 'update.sh' ] && continue
+    [ $file = '.snapshots' ] && continue
     [ $file = '.claude' ] && mkdir -p ~/.claude && ln -snf $dotfiles_path/.claude/CLAUDE.md ~/.claude/ && continue
     ln -snf $dotfiles_path/$file $HOME
   done
@@ -47,7 +50,7 @@ install_packages() {
     echo "brew is not installed" >&2
     exit 1
   fi
-  brew bundle --no-lock
+  brew bundle
 }
 
 install_font() {

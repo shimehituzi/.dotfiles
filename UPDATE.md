@@ -55,6 +55,11 @@ bba    # = cd ~/.dotfiles && ./update.sh  (月1回程度)
   avante / mcphub.nvim / mason 等の spec 固定プラグイン
 - `./update.sh pins` がクールダウン通過済みの最新版を表示するので、それを見て固定値を書き換える
 - **`@latest` や無指定でのインストールは禁止**(npx / npm -g / uvx すべて)
+- **ts_ls 用 TypeScript フォールバック**: mason 同梱の typescript 7.x は tsserver.js を
+  持たないため、`~/.local/share/nvim/ts-fallback` に typescript 5.x を置いている
+  (lua/plugins/lsp.lua の `fallbackPath` が参照)。消えた場合の再インストール:
+  `npm install --prefix ~/.local/share/nvim/ts-fallback typescript@5`
+  (レイヤー1の min-release-age が効く。mise の node バンプや mason 更新の影響は受けない)
 
 ## 新規インストール時のルール
 

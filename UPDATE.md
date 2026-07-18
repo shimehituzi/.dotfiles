@@ -51,7 +51,7 @@ bba    # = cd ~/.dotfiles && ./update.sh  (月1回程度)
 
 ## バージョン固定しているもの(更新は明示的に)
 
-- mcphub の MCP サーバー(servers.json)、`mcp-hub`(mcphub.lua の build 行)、
+- mcphub の MCP サーバー(servers.json)、`mcp-hub`(lua/plugins/llm.lua の build 行)、
   avante / mcphub.nvim / mason 等の spec 固定プラグイン
 - `./update.sh pins` がクールダウン通過済みの最新版を表示するので、それを見て固定値を書き換える
 - **`@latest` や無指定でのインストールは禁止**(npx / npm -g / uvx すべて)

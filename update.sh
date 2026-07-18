@@ -213,7 +213,7 @@ update_mise() {
   mise up --bump
   # mise の node 更新で旧 node のグローバル npm パッケージが消えるため復旧
   if ! command -v mcp-hub >/dev/null 2>&1; then
-    echo "==> mcp-hub 再インストール (mcphub.lua の build と同じ固定バージョン)"
+    echo "==> mcp-hub 再インストール (lua/plugins/llm.lua の build と同じ固定バージョン)"
     npm install -g mcp-hub@4.2.0
   fi
 }
@@ -223,7 +223,7 @@ update_mise() {
 # クールダウンを通過した最新版を表示する (書き換えはユーザーが行う)
 check_pins() {
   echo "==> 手動固定パッケージの更新候補 (${COOLDOWN_DAYS}日経過済みの最新版)"
-  echo "    反映先: .config/mcphub/servers.json / nvim の mcphub.lua (build 行)"
+  echo "    反映先: .config/mcphub/servers.json / nvim の lua/plugins/llm.lua (build 行)"
   local pkg v
   for pkg in mcp-hub @modelcontextprotocol/server-memory @modelcontextprotocol/server-github @modelcontextprotocol/server-sequential-thinking; do
     v=$(npm view "$pkg" time --json 2>/dev/null | jq -r --arg c "$cutoff_iso" \

@@ -18,7 +18,7 @@
     "memory": {
       "args": [
         "-y",
-        "@modelcontextprotocol/server-memory"
+        "@modelcontextprotocol/server-memory@2026.1.26"
       ],
       "command": "npx",
       "env": {
@@ -27,7 +27,7 @@
     },
     "git": {
       "args": [
-        "mcp-server-git"
+        "mcp-server-git==2026.1.14"
       ],
       "command": "uvx",
       "disabled": false
@@ -35,7 +35,7 @@
     "github": {
       "args": [
         "-c",
-        "GITHUB_PERSONAL_ACCESS_TOKEN=$(gopass show -o github/api_key) npx -y @modelcontextprotocol/server-github"
+        "GITHUB_PERSONAL_ACCESS_TOKEN=$(gopass show -o github/api_key) npx -y @modelcontextprotocol/server-github@2025.4.8"
       ],
       "command": "/bin/zsh",
       "disabled": false
@@ -43,14 +43,14 @@
     "sequentialthinking": {
       "args": [
         "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
+        "@modelcontextprotocol/server-sequential-thinking@2025.12.18"
       ],
       "command": "npx",
       "disabled": false
     },
     "time": {
       "args": [
-        "mcp-server-time",
+        "mcp-server-time==2026.1.26",
         "--local-timezone=Asia/Tokyo"
       ],
       "command": "uvx",

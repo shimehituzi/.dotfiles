@@ -30,9 +30,9 @@ I not use bash or zsh</string>
 	<key>AiMaxTokens</key>
 	<integer>200000</integer>
 	<key>AiModel</key>
-	<string>claude-sonnet-4-5</string>
+	<string>claude-opus-4-6</string>
 	<key>AiResponseMaxTokens</key>
-	<integer>64000</integer>
+	<integer>128000</integer>
 	<key>AitermURL</key>
 	<string>https://api.anthropic.com/v1/messages</string>
 	<key>AllowClipboardAccess</key>
@@ -369,7 +369,7 @@ I not use bash or zsh</string>
 		</dict>
 	</dict>
 	<key>Default Bookmark Guid</key>
-	<string>BA36C525-3289-48BE-B4B8-EC97B5E3FEF5</string>
+	<string>78661DE0-39E2-42AD-B18B-C7C5ED789322</string>
 	<key>EnableAPIServer</key>
 	<false/>
 	<key>GlobalKeyMap</key>

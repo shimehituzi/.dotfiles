@@ -13,7 +13,11 @@ abbr --add en trans -b -s ja -t en
 abbr --add e $EDITOR
 abbr --add rt trash
 abbr --add de delta
-abbr --add bb brew bundle
+# brew はクールダウン付き運用 (UPDATE.md 参照)
+abbr --add bb ~/.dotfiles/update.sh brew        # 日々の更新 (7日判定つき)
+abbr --add bbi ~/.dotfiles/update.sh install    # 新規インストール (7日判定 + Brewfile 更新まで)
+abbr --add bbk ~/.dotfiles/update.sh check      # インストール前の判定だけ
+abbr --add bba ~/.dotfiles/update.sh            # 月1回のフル更新 (brew + nvim + mise + pins)
 abbr --add bbd brew bundle dump --force
 abbr --add bbc brew bundle cleanup --force
 abbr --add kr "gk graph --gitkraken"

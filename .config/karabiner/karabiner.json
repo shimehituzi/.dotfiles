@@ -4,14 +4,15 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Swap Enter & Shift+Enter and CMD+Enter -> Enter on Discord and ChatGPT",
+                        "description": "Swap Enter & Shift+Enter and CMD+Enter -> Enter on Discord, ChatGPT and Claude",
                         "manipulators": [
                             {
                                 "conditions": [
                                     {
                                         "bundle_identifiers": [
                                             "com.hnc.Discord",
-                                            "com.openai.chat"
+                                            "com.openai.chat",
+                                            "com.anthropic.claudefordesktop"
                                         ],
                                         "type": "frontmost_application_if"
                                     }
@@ -28,7 +29,8 @@
                                     {
                                         "bundle_identifiers": [
                                             "com.hnc.Discord",
-                                            "com.openai.chat"
+                                            "com.openai.chat",
+                                            "com.anthropic.claudefordesktop"
                                         ],
                                         "type": "frontmost_application_if"
                                     }

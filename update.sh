@@ -159,11 +159,26 @@ update_lazy() {
   local lock="$nvim_config_path/lazy-lock.json"
   local plugdir="$HOME/.local/share/nvim/lazy"
 
-  echo "==> lazy.nvim: ${COOLDOWN_DAYS}日前時点のブランチ先端へ"
-  local pinned
-  pinned=$(nvim --headless "+lua for n,p in pairs(require('lazy.core.config').plugins) do if p.version or p.tag or p.commit or p.pin then io.write(n..'\n') end end" +qa 2>/dev/null)
+  # mcphub.nvim が起動時に必要とするため、無いマシンでは先に入れる
+  # (バージョンは lua/plugins/llm.lua の build 行が唯一の真)
+  if ! command -v mcp-hub >/dev/null 2>&1; then
+    local hub_spec
+    hub_spec=$(grep -o 'mcp-hub@[0-9.]*' "$nvim_config_path/lua/plugins/llm.lua" | head -1)
+    if [ -n "$hub_spec" ]; then
+      echo "==> mcp-hub が無いため導入: $hub_spec"
+      npm install -g "$hub_spec"
+    else
+      echo "  注意: llm.lua から mcp-hub のバージョンを特定できない (mcp-hub 未導入のまま続行)"
+    fi
+  fi
 
-  local tmp name dir branch sha cur
+  echo "==> lazy.nvim: ${COOLDOWN_DAYS}日前時点のブランチ先端へ"
+  local pinned specs
+  pinned=$(nvim --headless "+lua for n,p in pairs(require('lazy.core.config').plugins) do if p.version or p.tag or p.commit or p.pin then io.write(n..'\n') end end" +qa 2>/dev/null)
+  # spec の URL 一覧 (リポジトリ移転の検出に使う)
+  specs=$(nvim --headless "+lua for n,p in pairs(require('lazy.core.config').plugins) do io.write(n..'\t'..(p.url or '')..'\n') end" +qa 2>/dev/null)
+
+  local tmp name dir branch sha cur url cururl
   tmp=$(mktemp)
   cp "$lock" "$tmp"
   for name in $(jq -r 'keys[]' "$lock"); do
@@ -172,6 +187,16 @@ update_lazy() {
     fi
     dir="$plugdir/$name"
     [ -d "$dir/.git" ] || { echo "  未取得: $name (スキップ)"; continue; }
+    # spec の URL とディレクトリの origin がずれていたら移転とみなして合わせる
+    # (旧リモートのまま sha を計算すると、新リモートに存在しないコミットをロックに書いてしまう)
+    url=$(awk -F'\t' -v n="$name" '$1 == n { print $2 }' <<< "$specs")
+    if [ -n "$url" ]; then
+      cururl=$(git -C "$dir" remote get-url origin 2>/dev/null)
+      if [ "$cururl" != "$url" ]; then
+        echo "  リモート移転を検出: $name ($cururl -> $url)"
+        git -C "$dir" remote set-url origin "$url"
+      fi
+    fi
     # build フックが追跡ファイルを汚していると restore が警告・失敗するため毎回戻す
     git -C "$dir" checkout -q -- . 2>/dev/null
     branch=$(jq -r --arg p "$name" '.[$p].branch' "$lock")
@@ -238,13 +263,27 @@ update_mason() {
 
 # ---------------------------------------------------------------- mise
 update_mise() {
+  # 古い mise は minimum_release_age 未対応 = クールダウン無しで更新してしまうため拒否する
+  if ! mise settings get minimum_release_age >/dev/null 2>&1; then
+    echo "エラー: この mise は minimum_release_age 未対応 (クールダウン無しで更新される)" >&2
+    echo "  先に mise 本体を brew で更新すること: ./update.sh check mise" >&2
+    return 1
+  fi
+
   echo "==> mise up --bump (minimum_release_age=${COOLDOWN_DAYS}d が適用される)"
   echo "    注意: rust はリリースタイムスタンプが無くクールダウン対象外 (UPDATE.md 参照)"
   mise up --bump
   # mise の node 更新で旧 node のグローバル npm パッケージが消えるため復旧
+  # (バージョンは lua/plugins/llm.lua の build 行が唯一の真)
   if ! command -v mcp-hub >/dev/null 2>&1; then
-    echo "==> mcp-hub 再インストール (lua/plugins/llm.lua の build と同じ固定バージョン)"
-    npm install -g mcp-hub@4.2.0
+    local hub_spec
+    hub_spec=$(grep -o 'mcp-hub@[0-9.]*' "$nvim_config_path/lua/plugins/llm.lua" | head -1)
+    if [ -n "$hub_spec" ]; then
+      echo "==> mcp-hub 再インストール: $hub_spec"
+      npm install -g "$hub_spec"
+    else
+      echo "  注意: llm.lua から mcp-hub のバージョンを特定できない (手動で npm install -g mcp-hub@<版> すること)"
+    fi
   fi
 }
 

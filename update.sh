@@ -259,6 +259,20 @@ update_mason() {
   else
     echo "  Mason パッケージは全てスナップショットと一致"
   fi
+
+  # ts_ls 用 TypeScript フォールバック。mason 同梱の typescript 7.x は tsserver.js を
+  # 持たないため、5.x を別置きして lua/plugins/lsp.lua の fallbackPath から参照する
+  # (バージョン指定は lsp.lua のコメントが唯一の真)
+  if [ ! -f "$HOME/.local/share/nvim/ts-fallback/node_modules/typescript/lib/tsserver.js" ]; then
+    local ts_spec
+    ts_spec=$(grep -o 'typescript@[0-9]*' "$nvim_config_path/lua/plugins/lsp.lua" | head -1)
+    if [ -n "$ts_spec" ]; then
+      echo "==> ts_ls 用 TypeScript フォールバックを導入: $ts_spec"
+      npm install --prefix "$HOME/.local/share/nvim/ts-fallback" "$ts_spec"
+    else
+      echo "  注意: lsp.lua から TypeScript フォールバックの版を特定できない (ts_ls が動かない場合は UPDATE.md 参照)"
+    fi
+  fi
 }
 
 # ---------------------------------------------------------------- mise

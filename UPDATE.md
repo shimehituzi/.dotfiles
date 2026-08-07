@@ -42,6 +42,9 @@ mcphub の MCP サーバー(npx/uvx 起動)はバージョン厳密固定済み�
 bba    # = cd ~/.dotfiles && ./update.sh  (月1回程度)
 ```
 
+> 前提: バンプ日の確認に GitHub API を使うため、**各マシンで `gh auth login` が必要**。
+> 認証が無効なら brew の更新・導入は明確なエラーで中断する(何もインストールしない)。
+
 | 経路 | 方法 |
 |---|---|
 | Homebrew formula/cask | バージョンバンプのコミット日時を GitHub API で確認し、7日未満なら**保留** |

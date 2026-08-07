@@ -24,6 +24,25 @@ nvim_config_path="$dotfiles_path/.config/nvim"
 mason_data_path="$HOME/.local/share/nvim/mason"
 cutoff_iso=$(date -u -v-${COOLDOWN_DAYS}d +%Y-%m-%dT%H:%M:%SZ)
 
+# ---------------------------------------------------------------- GitHub API
+# gh が使えるか (未インストール・認証切れの検出)。結果はキャッシュする
+gh_ok=""
+gh_available() {
+  if [ -z "$gh_ok" ]; then
+    if gh api rate_limit >/dev/null 2>&1; then gh_ok=1; else gh_ok=0; fi
+  fi
+  [ "$gh_ok" = 1 ]
+}
+
+# brew 系コマンド用: gh が使えないなら理由を出して中断する
+require_gh() {
+  gh_available && return 0
+  echo "エラー: GitHub API を利用できない (gh 未インストール、または認証が無効)" >&2
+  echo "  確認: gh auth status / 修復: gh auth login" >&2
+  echo "  バンプ日を確認できないため、クールダウン方針に従い brew の更新・導入は行わない" >&2
+  return 1
+}
+
 # ---------------------------------------------------------------- Homebrew 共通
 # クールダウン判定。formula/cask は自動判別
 # 結果: gate_kind / gate_date (グローバル)。戻り値 0=可 1=保留 2=判定不能
@@ -41,8 +60,11 @@ brew_gate() {
   fi
   rbpath=$(printf '%s' "$info" | jq -r ".${jqkey}[0].ruby_source_path // empty")
   [ -z "$rbpath" ] && return 2 # 空のまま API を叩くとリポジトリ先端の日付を拾ってしまう
-  gate_date=$(gh api "repos/$repo/commits?path=${rbpath}&per_page=1" --jq '.[0].commit.committer.date' 2>/dev/null)
-  [ -z "$gate_date" ] && return 2
+  gate_date=$(gh api "repos/$repo/commits?path=${rbpath}&per_page=1" --jq '.[0].commit.committer.date' 2>/dev/null) || { gate_date=""; return 2; }
+  case "$gate_date" in
+    [0-9][0-9][0-9][0-9]-*) ;; # ISO 日付だけを受け付ける (API エラーの JSON 等を日付として扱わない)
+    *) gate_date=""; return 2 ;;
+  esac
   if [[ "$gate_date" < "$cutoff_iso" ]]; then return 0; else return 1; fi
 }
 
@@ -60,6 +82,8 @@ dump_brewfile() {
 
 # ---------------------------------------------------------------- brew (bb)
 update_brew() {
+  require_gh || return 1
+
   echo "==> brew update (メタデータのみ)"
   brew update --quiet
 
@@ -95,6 +119,7 @@ update_brew() {
 # ---------------------------------------------------------------- install (bbi) / check
 cmd_install() {
   [ $# -eq 0 ] && { echo "使い方: ./update.sh install <pkg>..." >&2; return 1; }
+  require_gh || return 1
   local pkg rc did=0
   for pkg in "$@"; do
     brew_gate "$pkg"; rc=$?
@@ -114,6 +139,7 @@ cmd_install() {
 
 cmd_check() {
   [ $# -eq 0 ] && { echo "使い方: ./update.sh check <pkg>..." >&2; return 1; }
+  require_gh || return 1
   local pkg rc
   for pkg in "$@"; do
     brew_gate "$pkg"; rc=$?
@@ -174,11 +200,15 @@ update_lazy() {
 update_mason() {
   echo "==> Mason: レジストリを${COOLDOWN_DAYS}日以上前のスナップショットへピン"
   local tag="" page
-  for page in 1 2 3 4 5; do
-    tag=$(gh api "repos/mason-org/mason-registry/releases?per_page=100&page=$page" \
-      --jq "[.[] | select(.published_at <= \"$cutoff_iso\")] | sort_by(.published_at) | last | .tag_name // empty" 2>/dev/null)
-    [ -n "$tag" ] && break
-  done
+  if gh_available; then
+    for page in 1 2 3 4 5; do
+      tag=$(gh api "repos/mason-org/mason-registry/releases?per_page=100&page=$page" \
+        --jq "[.[] | select(.published_at <= \"$cutoff_iso\")] | sort_by(.published_at) | last | .tag_name // empty" 2>/dev/null)
+      [ -n "$tag" ] && break
+    done
+  else
+    echo "  注意: GitHub API を利用できない (gh auth login で修復)。新しいピンは取得しない"
+  fi
   if [ -n "$tag" ]; then
     echo "$tag" > "$nvim_config_path/mason-registry-pin.txt"
     echo "  ピン: $tag"

@@ -72,6 +72,33 @@ gate_eligible_date() { # gate_date + COOLDOWN_DAYS 日 (この日以降なら入
   date -u -j -v+${COOLDOWN_DAYS}d -f "%Y-%m-%dT%H:%M:%SZ" "$gate_date" +%Y-%m-%d 2>/dev/null || echo "?"
 }
 
+# pkg を更新 (mode=upgrade) / 導入 (mode=install) するとき brew が一緒に触るパッケージ
+# (依存先・依存元・cask の依存 cask) を brew 自身の計画 (--dry-run) から取り、クールダウン判定にかける。
+# brew は依存経由で 7 日未満の版を自動で入れてしまうため、1つでも未達なら本体を保留する
+# 出力: 未達の一覧 (空なら問題なし)。計画が読めなければ理由を返す (保留扱い)
+brew_blockers() {
+  local pkg=$1 kind=$2 mode=$3 plan dep blockers=""
+  plan=$(brew "$mode" --dry-run --$kind "$pkg" 2>&1)
+  case "$plan" in
+    *"==> Would "*) ;;                       # 計画の見出しがある
+    *"already installed"*) return ;;          # 既に最新 (先の更新に巻き込まれた等)。brew は何もしない
+    *) printf '(brew の計画を読めない)'; return ;;
+  esac
+  # 見出し "==> Would install N dependencies for X:" 等の下の行の先頭が名前 ("name" / "name old -> new")
+  for dep in $(printf '%s\n' "$plan" | awk -v self="$pkg" '
+    /^==> Would / { on = 1; next }
+    /^==>/        { on = 0; next }
+    on && NF      { if ($1 != self) print $1 }' | sort -u); do
+    brew_gate "$dep"
+    case $? in
+      0) ;;
+      1) blockers="$blockers $dep(バンプ $gate_date)" ;;
+      *) blockers="$blockers $dep(判定不能)" ;;
+    esac
+  done
+  printf '%s' "${blockers# }"
+}
+
 dump_brewfile() {
   # go/cargo/npm セクションと説明コメントは出さない (fish の universal 変数にも設定済み)
   HOMEBREW_BUNDLE_DUMP_NO_GO=1 HOMEBREW_BUNDLE_DUMP_NO_CARGO=1 \
@@ -87,13 +114,18 @@ update_brew() {
   echo "==> brew update (メタデータのみ)"
   brew update --quiet
 
-  local pkg rc
-  echo "==> 更新: バンプから ${COOLDOWN_DAYS} 日未満のものは保留"
+  local pkg rc blockers
+  echo "==> 更新: バンプから ${COOLDOWN_DAYS} 日未満のものは保留 (brew が巻き込む依存も判定)"
   for pkg in $(brew outdated --quiet); do
     brew_gate "$pkg"; rc=$?
     case $rc in
-      0) echo "  更新: $pkg (バンプ $gate_date)"
-         brew upgrade --$gate_kind "$pkg" ;;
+      0) blockers=$(brew_blockers "$pkg" "$gate_kind" upgrade)
+         if [ -n "$blockers" ]; then
+           echo "  保留: $pkg (巻き込まれる $blockers が未達)"
+         else
+           echo "  更新: $pkg (バンプ $gate_date)"
+           brew upgrade --$gate_kind "$pkg"
+         fi ;;
       1) echo "  保留: $pkg (バンプ $gate_date → $(gate_eligible_date) 以降に適格)" ;;
       *) echo "  判定不能: $pkg (保留)" ;;
     esac
@@ -107,8 +139,13 @@ update_brew() {
       brew list $listflag "$pkg" >/dev/null 2>&1 && continue
       brew_gate "$pkg"; rc=$?
       case $rc in
-        0) echo "  新規導入: $pkg (バンプ $gate_date)"
-           if [ "$kind" = cask ]; then brew install --cask "$pkg"; else brew install "$pkg"; fi ;;
+        0) blockers=$(brew_blockers "$pkg" "$kind" install)
+           if [ -n "$blockers" ]; then
+             echo "  新規保留: $pkg (巻き込まれる $blockers が未達)"
+           else
+             echo "  新規導入: $pkg (バンプ $gate_date)"
+             if [ "$kind" = cask ]; then brew install --cask "$pkg"; else brew install "$pkg"; fi
+           fi ;;
         1) echo "  新規保留: $pkg (バンプ $gate_date → $(gate_eligible_date) 以降に適格)" ;;
         *) echo "  判定不能: $pkg (保留)" ;;
       esac
@@ -120,15 +157,24 @@ update_brew() {
 cmd_install() {
   [ $# -eq 0 ] && { echo "使い方: ./update.sh install <pkg>..." >&2; return 1; }
   require_gh || return 1
-  local pkg rc did=0
+  local pkg rc did=0 blockers
   for pkg in "$@"; do
     brew_gate "$pkg"; rc=$?
+    blockers=""
+    if [ $rc -eq 0 ]; then
+      blockers=$(brew_blockers "$pkg" "$gate_kind" install)
+      [ -n "$blockers" ] && rc=1 # 巻き込みが未達なら本体も保留
+    fi
     if [ $rc -eq 0 ] || { [ $rc -eq 1 ] && [ "${FORCE:-0}" = 1 ]; }; then
       [ $rc -eq 1 ] && echo "  FORCE=1 のためクールダウンを無視して入れる: $pkg"
       echo "==> brew install: $pkg ($gate_kind, バンプ $gate_date)"
       if [ "$gate_kind" = cask ]; then brew install --cask "$pkg"; else brew install "$pkg"; fi && did=1
     elif [ $rc -eq 1 ]; then
-      echo "  保留: $pkg はバンプ ($gate_date) から ${COOLDOWN_DAYS} 日未満。$(gate_eligible_date) 以降に入れること"
+      if [ -n "$blockers" ]; then
+        echo "  保留: $pkg は巻き込まれる $blockers が未達"
+      else
+        echo "  保留: $pkg はバンプ ($gate_date) から ${COOLDOWN_DAYS} 日未満。$(gate_eligible_date) 以降に入れること"
+      fi
       echo "        緊急なら: FORCE=1 ./update.sh install $pkg"
     else
       echo "  判定不能: $pkg (名前を確認: brew search $pkg)"
@@ -140,11 +186,17 @@ cmd_install() {
 cmd_check() {
   [ $# -eq 0 ] && { echo "使い方: ./update.sh check <pkg>..." >&2; return 1; }
   require_gh || return 1
-  local pkg rc
+  local pkg rc mode blockers
   for pkg in "$@"; do
     brew_gate "$pkg"; rc=$?
     case $rc in
-      0) echo "  可:     $pkg ($gate_kind, バンプ $gate_date)" ;;
+      0) if brew list --$gate_kind "$pkg" >/dev/null 2>&1; then mode=upgrade; else mode=install; fi
+         blockers=$(brew_blockers "$pkg" "$gate_kind" "$mode")
+         if [ -n "$blockers" ]; then
+           echo "  保留:   $pkg ($gate_kind, バンプ $gate_date。巻き込まれる $blockers が未達)"
+         else
+           echo "  可:     $pkg ($gate_kind, バンプ $gate_date)"
+         fi ;;
       1) echo "  保留:   $pkg ($gate_kind, バンプ $gate_date → $(gate_eligible_date) 以降に適格)" ;;
       *) echo "  判定不能: $pkg" ;;
     esac
@@ -260,9 +312,9 @@ update_mason() {
     echo "  Mason パッケージは全てスナップショットと一致"
   fi
 
-  # ts_ls 用 TypeScript フォールバック。mason 同梱の typescript 7.x は tsserver.js を
-  # 持たないため、5.x を別置きして lua/plugins/lsp.lua の fallbackPath から参照する
-  # (バージョン指定は lsp.lua のコメントが唯一の真)
+  # ts_ls 用 TypeScript フォールバック。mason 同梱の typescript が tsserver.js を持たない版
+  # (7.x ネイティブ版) のときの予備として 5.x を別置きする。lua/plugins/lsp.lua が同梱版の
+  # 有無を見て fallbackPath を切り替える (バージョン指定は lsp.lua のコメントが唯一の真)
   if [ ! -f "$HOME/.local/share/nvim/ts-fallback/node_modules/typescript/lib/tsserver.js" ]; then
     local ts_spec
     ts_spec=$(grep -o 'typescript@[0-9]*' "$nvim_config_path/lua/plugins/lsp.lua" | head -1)

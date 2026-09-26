@@ -47,7 +47,7 @@ bba    # = cd ~/.dotfiles && ./update.sh  (月1回程度)
 
 | 経路 | 方法 |
 |---|---|
-| Homebrew formula/cask | バージョンバンプのコミット日時を GitHub API で確認し、7日未満なら**保留** |
+| Homebrew formula/cask | バージョンバンプのコミット日時を GitHub API で確認し、7日未満なら**保留**。さらに brew 自身の計画(`brew upgrade/install --dry-run`)に出る**巻き込み対象**(依存先・依存元・cask の依存 cask)も全て同じ判定にかけ、1つでも未達なら本体ごと保留する(brew は依存経由で7日未満の版を自動で入れてしまうため。計画が読めない場合も保留) |
 | lazy.nvim(54個のHEAD追従プラグイン) | 各プラグインの「**7日前時点のブランチ先端コミット**」を計算してロックに書き、`:Lazy restore` で適用 |
 | Mason | レジストリを「**7日以上前のスナップショットリリース**」にピン([mason-registry-pin.txt](.config/nvim/mason-registry-pin.txt))。バージョン未指定インストールや :Mason の更新はスナップショット時点の版までしか進まない |
 | treesitter パーサー | 本体コミットの lockfile.json でリビジョン固定(本体が上のクールダウンに従うため自動的に安全) |
@@ -58,10 +58,10 @@ bba    # = cd ~/.dotfiles && ./update.sh  (月1回程度)
   avante / mcphub.nvim / mason 等の spec 固定プラグイン
 - `./update.sh pins` がクールダウン通過済みの最新版を表示するので、それを見て固定値を書き換える
 - **`@latest` や無指定でのインストールは禁止**(npx / npm -g / uvx すべて)
-- **ts_ls 用 TypeScript フォールバック**: mason 同梱の typescript 7.x は tsserver.js を
-  持たないため、`~/.local/share/nvim/ts-fallback` に typescript 5.x を置いている
-  (lua/plugins/lsp.lua の `fallbackPath` が参照)。消えた場合の再インストール:
-  `npm install --prefix ~/.local/share/nvim/ts-fallback typescript@5`
+- **ts_ls 用 TypeScript フォールバック**: mason 同梱の typescript が tsserver.js を持たない版
+  (7.x ネイティブ版)のときだけ使う予備として、`~/.local/share/nvim/ts-fallback` に typescript 5.x を置いている
+  (lua/plugins/lsp.lua が同梱版の有無を見て `fallbackPath` を切り替える)。update.sh が無ければ自動で導入する。
+  手動で入れ直す場合: `npm install --prefix ~/.local/share/nvim/ts-fallback typescript@5`
   (レイヤー1の min-release-age が効く。mise の node バンプや mason 更新の影響は受けない)
 
 ## 新規インストール時のルール
@@ -85,8 +85,13 @@ bba    # = cd ~/.dotfiles && ./update.sh  (月1回程度)
 | cask アプリの自己更新 | Obsidian / Docker / iTerm2 等はアプリ内アップデータで brew の外から更新される | 急ぎでなければアプリ内自動更新をオフにして手動更新 |
 | Obsidian コミュニティプラグイン | 固定機構なし。更新は手動実行時のみ | 「Check for updates」を押すのを急がない(7日待つ) |
 | Claude Code 本体 | 自動更新 | 公式配布で署名済み。リスク受容 |
-| Homebrew の依存連鎖 | 許可した formula の依存は判定なしで連鎖更新される | リスク受容(homebrew-core はメンテナ審査あり) |
 | ghcup | クールダウン機構なし | recommended チャンネル(実績版)のみ使う |
+
+## プラグインが実行時に取得するバイナリ
+
+- copilot.lua は起動時に `copilot-language-server` を GitHub Releases から取得する。
+  バージョンと sha256 はプラグインのコミット(lazy-lock.json で固定)に埋め込まれており、
+  取得後にハッシュ検証される。つまりプラグイン側のクールダウンに従う経路で、追加の対策は不要
 
 ## インシデントを踏んだ疑いがあるとき
 
